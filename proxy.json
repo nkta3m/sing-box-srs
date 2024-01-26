@@ -23,6 +23,7 @@
                 "curl"
             ],
             "domain": [
+                "alacritty.org",
                 "bulianglin.com",
                 "curl.se",
                 "dl.johnsadventures.com",
