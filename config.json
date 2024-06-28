@@ -10,14 +10,14 @@
                 "tag": "dns_remote",
                 "address": "https://dns.google/dns-query",
                 "address_resolver": "dns_resolver",
-                "strategy": "ipv4_only",
+                "strategy": "prefer_ipv4",
                 "detour": "🚀 节点选择"
             },
             {
                 "tag": "dns_direct",
                 "address": "https://dns.alidns.com/dns-query",
                 "address_resolver": "dns_resolver",
-                "strategy": "ipv4_only",
+                "strategy": "prefer_ipv4",
                 "detour": "🎯 Direct"
             },
             {
@@ -98,16 +98,6 @@
     },
     "inbounds": [
         {
-            "tag": "mixed-in",
-            "type": "mixed",
-            "listen": "127.0.0.1",
-            "listen_port": 1080,
-            "sniff": true,
-            "sniff_override_destination": false,
-            "domain_strategy": "prefer_ipv4",
-            "set_system_proxy": false
-        },
-        {
             "tag": "tun-in",
             "type": "tun",
             "interface_name": "tun0",
@@ -120,7 +110,7 @@
             "stack": "mixed",
             "sniff": true,
             "sniff_override_destination": false,
-            "domain_strategy": "ipv4_only",
+            "domain_strategy": "prefer_ipv4",
             "platform": {
                 "http_proxy": {
                     "enabled": true,
