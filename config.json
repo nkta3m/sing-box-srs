@@ -133,7 +133,7 @@
     "outbounds": [
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·14",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·14",
             "server": "irvideo.cfd",
             "server_port": 443,
             "uuid": "e537f2f5-2a0c-4f59-92c9-832ca6433bf3",
@@ -155,7 +155,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·15",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·15",
             "server": "az05.beyondy.cfd",
             "server_port": 443,
             "uuid": "3f638f34-8dba-4186-bc43-2716a7ddd4be",
@@ -177,7 +177,7 @@
         },
         {
             "type": "vmess",
-            "tag": "·伊朗·TG@kkouokk·16",
+            "tag": "🇮🇷 ·伊朗·TG@kkouokk·16",
             "server": "indiavideo.sbs",
             "server_port": 443,
             "uuid": "425c5e6e-30a0-4984-8a13-ee6f72053162",
@@ -199,7 +199,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·17",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·17",
             "server": "beyonddbc.sbs",
             "server_port": 443,
             "uuid": "8d90c129-4156-4d6c-9115-24df25f26a02",
@@ -221,7 +221,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·18",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·18",
             "server": "denc36.xtooltech.cfd",
             "server_port": 443,
             "uuid": "b321fd5d-e6ec-4293-a644-164e3885f52e",
@@ -231,7 +231,7 @@
                 "type": "ws",
                 "path": "/linkws",
                 "headers": {
-                    "Host": "denc36.xtooltech.cfd"
+                    "Host": "adenc36v.xtooltech.cfd"
                 }
             },
             "tls": {
@@ -243,7 +243,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·19",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·19",
             "server": "hms23.fixedfloati.cfd",
             "server_port": 443,
             "uuid": "9072d339-3885-4fe1-b0bc-29fa7505410e",
@@ -253,7 +253,7 @@
                 "type": "ws",
                 "path": "/linkwsd",
                 "headers": {
-                    "Host": "hms23.fixedfloati.cfd"
+                    "Host": "fixedfloati.cfd"
                 }
             },
             "tls": {
@@ -265,7 +265,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·20",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·20",
             "server": "hms19.best-tizi.top",
             "server_port": 443,
             "uuid": "62aa5f80-0328-4004-a375-7f5a59df4022",
@@ -309,7 +309,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·22",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·22",
             "server": "hms2301.fixedfloati.cfd",
             "server_port": 443,
             "uuid": "9072d339-3885-4fe1-b0bc-29fa7505410e",
@@ -319,7 +319,7 @@
                 "type": "ws",
                 "path": "/linkwsd",
                 "headers": {
-                    "Host": "hms2301.fixedfloati.cfd"
+                    "Host": "fixedfloati.cfd"
                 }
             },
             "tls": {
@@ -331,7 +331,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·23",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·23",
             "server": "irhms03.dongfeng.cfd",
             "server_port": 443,
             "uuid": "fa5b55cd-cafc-4de0-a4c8-722e02a9f58e",
@@ -341,7 +341,7 @@
                 "type": "ws",
                 "path": "/linkws",
                 "headers": {
-                    "Host": "irhms03.dongfeng.cfd"
+                    "Host": "hms03.dongfeng.cfd"
                 }
             },
             "tls": {
@@ -353,7 +353,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·24",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·24",
             "server": "hms17.mifixedfloat.top",
             "server_port": 443,
             "uuid": "0c869014-5ff1-4a1e-901f-198a9ee52ef9",
@@ -375,7 +375,7 @@
         },
         {
             "type": "vmess",
-            "tag": "·伊朗·TG@kkouokk·25",
+            "tag": "🇮🇷 ·伊朗·TG@kkouokk·25",
             "server": "beyonddsz.cfd",
             "server_port": 443,
             "uuid": "9b456c2a-f2c1-45e1-87a9-b7628b04bb24",
@@ -397,7 +397,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·26",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·26",
             "server": "lin0502.hwcar.sbs",
             "server_port": 443,
             "uuid": "39cec18f-a439-427c-9a4e-aeb6fcdf6f53",
@@ -407,7 +407,7 @@
                 "type": "ws",
                 "path": "/linkws",
                 "headers": {
-                    "Host": "lin0502.hwcar.sbs"
+                    "Host": "linja05.hwcar.sbs"
                 }
             },
             "tls": {
@@ -419,7 +419,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·27",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·27",
             "server": "gt02.bestforxray.buzz",
             "server_port": 443,
             "uuid": "c1fd780a-3408-4f48-a932-5832a28ce9f6",
@@ -429,7 +429,7 @@
                 "type": "ws",
                 "path": "/linkws",
                 "headers": {
-                    "Host": "gt02.bestforxray.buzz"
+                    "Host": "ausgt02.bestforxray.buzz"
                 }
             },
             "tls": {
@@ -441,7 +441,7 @@
         },
         {
             "type": "vmess",
-            "tag": "🇺🇲 ·美国·TG@kkouokk·28",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·28",
             "server": "gt021.bestforxray.buzz",
             "server_port": 443,
             "uuid": "c1fd780a-3408-4f48-a932-5832a28ce9f6",
@@ -451,7 +451,7 @@
                 "type": "ws",
                 "path": "/linkws",
                 "headers": {
-                    "Host": "gt021.bestforxray.buzz"
+                    "Host": "ausgt02.bestforxray.buzz"
                 }
             },
             "tls": {
@@ -472,7 +472,9 @@
             "transport": {
                 "type": "ws",
                 "path": "/v2ray",
-                "headers": {}
+                "headers": {
+                    "Host": "%7B%22Host%22:%22193.25.215.160%22%7D"
+                }
             },
             "network": "tcp",
             "tcp_fast_open": false
@@ -483,7 +485,7 @@
             "outbounds": [
                 "🇺🇲 ·美国·TG@kkouokk·14",
                 "🇺🇲 ·美国·TG@kkouokk·15",
-                "·伊朗·TG@kkouokk·16",
+                "🇮🇷 ·伊朗·TG@kkouokk·16",
                 "🇺🇲 ·美国·TG@kkouokk·17",
                 "🇺🇲 ·美国·TG@kkouokk·18",
                 "🇺🇲 ·美国·TG@kkouokk·19",
@@ -492,7 +494,7 @@
                 "🇺🇲 ·美国·TG@kkouokk·22",
                 "🇺🇲 ·美国·TG@kkouokk·23",
                 "🇺🇲 ·美国·TG@kkouokk·24",
-                "·伊朗·TG@kkouokk·25",
+                "🇮🇷 ·伊朗·TG@kkouokk·25",
                 "🇺🇲 ·美国·TG@kkouokk·26",
                 "🇺🇲 ·美国·TG@kkouokk·27",
                 "🇺🇲 ·美国·TG@kkouokk·28",
@@ -509,7 +511,7 @@
                 "♻️ 自动选择",
                 "🇺🇲 ·美国·TG@kkouokk·14",
                 "🇺🇲 ·美国·TG@kkouokk·15",
-                "·伊朗·TG@kkouokk·16",
+                "🇮🇷 ·伊朗·TG@kkouokk·16",
                 "🇺🇲 ·美国·TG@kkouokk·17",
                 "🇺🇲 ·美国·TG@kkouokk·18",
                 "🇺🇲 ·美国·TG@kkouokk·19",
@@ -518,7 +520,7 @@
                 "🇺🇲 ·美国·TG@kkouokk·22",
                 "🇺🇲 ·美国·TG@kkouokk·23",
                 "🇺🇲 ·美国·TG@kkouokk·24",
-                "·伊朗·TG@kkouokk·25",
+                "🇮🇷 ·伊朗·TG@kkouokk·25",
                 "🇺🇲 ·美国·TG@kkouokk·26",
                 "🇺🇲 ·美国·TG@kkouokk·27",
                 "🇺🇲 ·美国·TG@kkouokk·28",
