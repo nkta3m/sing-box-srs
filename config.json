@@ -98,6 +98,16 @@
     },
     "inbounds": [
         {
+            "tag": "mixed-in",
+            "type": "mixed",
+            "listen": "127.0.0.1",
+            "listen_port": 2080,
+            "sniff": true,
+            "sniff_override_destination": false,
+            "domain_strategy": "prefer_ipv4",
+            "set_system_proxy": false
+        },
+        {
             "tag": "tun-in",
             "type": "tun",
             "interface_name": "tun0",
