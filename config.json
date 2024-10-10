@@ -140,13 +140,6 @@
       "listen": "::",
       "listen_port": 8888,
       "sniff": true
-    },
-    {
-      "type": "direct",
-      "listen": "::",
-      "listen_port": 53,
-      "sniff": true,
-      "tag": "dns-in"
     }
   ],
   "route": {
