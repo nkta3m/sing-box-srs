@@ -2,6 +2,7 @@
     "log": {
         "disabled": false,
         "level": "panic",
+        "output": "sing-box.log",
         "timestamp": true
     },
     "dns": {
@@ -101,16 +102,6 @@
     },
     "inbounds": [
         {
-            "tag": "mixed-in",
-            "type": "mixed",
-            "listen": "127.0.0.1",
-            "listen_port": 2080,
-            "sniff": true,
-            "sniff_override_destination": false,
-            "domain_strategy": "prefer_ipv4",
-            "set_system_proxy": false
-        },
-        {
             "tag": "tun-in",
             "type": "tun",
             "interface_name": "tun0",
@@ -125,14 +116,7 @@
             "stack": "mixed",
             "sniff": true,
             "sniff_override_destination": false,
-            "domain_strategy": "prefer_ipv4",
-            "platform": {
-                "http_proxy": {
-                    "enabled": true,
-                    "server": "127.0.0.1",
-                    "server_port": 1080
-                }
-            }
+            "domain_strategy": "prefer_ipv4"
         }
     ],
     "outbounds": [
