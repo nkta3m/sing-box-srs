@@ -671,7 +671,6 @@
         "clash_api": {
             "external_controller": "127.0.0.1:9090",
             "external_ui": "ui",
-            "secret": "10223FalconPine",
             "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
             "external_ui_download_detour": "🚀 Proxy",
             "default_mode": ""
