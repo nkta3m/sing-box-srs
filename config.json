@@ -981,6 +981,10 @@
       ]
     },
     {
+      "tag": "🎯 Direct",
+      "type": "direct"
+    },
+    {
       "tag": "🈲 Block",
       "type": "block"
     },
