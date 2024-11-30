@@ -1,679 +1,1122 @@
 {
-    "log": {
-        "disabled": false,
-        "level": "panic",
-        "timestamp": true
-    },
-    "dns": {
-        "servers": [
-            {
-                "tag": "dns_remote",
-                "address": "https://dns.google/dns-query",
-                "address_resolver": "dns_resolver",
-                "strategy": "prefer_ipv4",
-                "detour": "🚀 Proxy"
-            },
-            {
-                "tag": "dns_direct",
-                "address": "https://dns.alidns.com/dns-query",
-                "address_resolver": "dns_resolver",
-                "strategy": "prefer_ipv4",
-                "detour": "🎯 Direct"
-            },
-            {
-                "tag": "dns_resolver",
-                "address": "223.5.5.5",
-                "detour": "🎯 Direct"
-            },
-            {
-                "tag": "dns_block",
-                "address": "rcode://success"
-            },
-            {
-                "tag": "dns_fake",
-                "address": "fakeip",
-                "strategy": "prefer_ipv4"
-            }
-        ],
-        "rules": [
-            {
-                "outbound": "any",
-                "server": "dns_direct",
-                "disable_cache": true
-            },
-            {
-                "clash_mode": "Direct",
-                "server": "dns_direct"
-            },
-            {
-                "clash_mode": "Global",
-                "server": "dns_remote"
-            },
-            {
-                "rule_set": [
-                    "geoip-cn",
-                    "geosite-geolocation-cn"
-                ],
-                "server": "dns_direct"
-            },
-            {
-                "type": "logical",
-                "mode": "and",
-                "rules": [
-                    {
-                        "rule_set": "geosite-geolocation-!cn",
-                        "invert": true
-                    },
-                    {
-                        "rule_set": [
-                            "geoip-cn"
-                        ]
-                    }
-                ],
-                "server": "dns_remote",
-                "client_subnet": "114.114.114.114/24"
-            },
-            {
-                "inbound": [
-                    "mixed-in",
-                    "tun-in"
-                ],
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
-                "server": "dns_fake",
-                "disable_cache": true,
-                "rewrite_ttl": 0
-            }
-        ],
-        "fakeip": {
-            "enabled": true,
-            "inet4_range": "198.18.0.0/15",
-            "inet6_range": "2001:db8::/64"
-        },
-        "final": "dns_remote",
+  "log": {
+    "disabled": false,
+    "level": "panic",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns_remote",
+        "address": "https://dns.google/dns-query",
+        "address_resolver": "dns_resolver",
         "strategy": "prefer_ipv4",
-        "disable_cache": false,
-        "disable_expire": false,
-        "independent_cache": true,
-        "reverse_mapping": true
-    },
-    "inbounds": [
-        {
-            "tag": "mixed-in",
-            "type": "mixed",
-            "listen": "127.0.0.1",
-            "listen_port": 2080,
-            "sniff": true,
-            "sniff_override_destination": false,
-            "domain_strategy": "prefer_ipv4",
-            "set_system_proxy": false
-        },
-        {
-            "tag": "tun-in",
-            "type": "tun",
-            "interface_name": "tun0",
-            "address": [
-                "172.19.0.1/30",
-                "fdfe:dcba:9876::1/126"
-            ],
-            "mtu": 9000,
-            "auto_route": true,
-            "strict_route": true,
-            "endpoint_independent_nat": false,
-            "stack": "mixed",
-            "sniff": true,
-            "sniff_override_destination": false,
-            "domain_strategy": "prefer_ipv4",
-            "platform": {
-                "http_proxy": {
-                    "enabled": true,
-                    "server": "127.0.0.1",
-                    "server_port": 1080
-                }
-            }
-        }
+        "detour": "🚀 Proxy"
+      },
+      {
+        "tag": "dns_direct",
+        "address": "https://dns.alidns.com/dns-query",
+        "address_resolver": "dns_resolver",
+        "strategy": "prefer_ipv4",
+        "detour": "🎯 Direct"
+      },
+      {
+        "tag": "dns_resolver",
+        "address": "223.5.5.5",
+        "detour": "🎯 Direct"
+      },
+      {
+        "tag": "dns_block",
+        "address": "rcode://success"
+      },
+      {
+        "tag": "dns_fake",
+        "address": "fakeip",
+        "strategy": "prefer_ipv4"
+      }
     ],
-    "outbounds": [
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·14",
-            "server": "irvideo.cfd",
-            "server_port": 443,
-            "uuid": "e537f2f5-2a0c-4f59-92c9-832ca6433bf3",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "irvideo.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·15",
-            "server": "az05.beyondy.cfd",
-            "server_port": 443,
-            "uuid": "3f638f34-8dba-4186-bc43-2716a7ddd4be",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/link",
-                "headers": {
-                    "Host": "az05.beyondy.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇮🇷 ·伊朗·TG@kkouokk·16",
-            "server": "indiavideo.sbs",
-            "server_port": 443,
-            "uuid": "425c5e6e-30a0-4984-8a13-ee6f72053162",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "indiavideo.sbs"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·17",
-            "server": "beyonddbc.sbs",
-            "server_port": 443,
-            "uuid": "8d90c129-4156-4d6c-9115-24df25f26a02",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "beyonddbc.sbs"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·18",
-            "server": "denc36.xtooltech.cfd",
-            "server_port": 443,
-            "uuid": "b321fd5d-e6ec-4293-a644-164e3885f52e",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "adenc36v.xtooltech.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·19",
-            "server": "hms23.fixedfloati.cfd",
-            "server_port": 443,
-            "uuid": "9072d339-3885-4fe1-b0bc-29fa7505410e",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkwsd",
-                "headers": {
-                    "Host": "fixedfloati.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·20",
-            "server": "hms19.best-tizi.top",
-            "server_port": 443,
-            "uuid": "62aa5f80-0328-4004-a375-7f5a59df4022",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "hms19.best-tizi.top"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇫🇷 ·法国·TG@kkouokk·21",
-            "server": "hms26.xpengmotors.sbs",
-            "server_port": 443,
-            "uuid": "fb0a2de6-bf06-4ff0-97ce-c21abcdc2d55",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "hms26.xpengmotors.sbs"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·22",
-            "server": "hms2301.fixedfloati.cfd",
-            "server_port": 443,
-            "uuid": "9072d339-3885-4fe1-b0bc-29fa7505410e",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkwsd",
-                "headers": {
-                    "Host": "fixedfloati.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·23",
-            "server": "irhms03.dongfeng.cfd",
-            "server_port": 443,
-            "uuid": "fa5b55cd-cafc-4de0-a4c8-722e02a9f58e",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "hms03.dongfeng.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·24",
-            "server": "hms17.mifixedfloat.top",
-            "server_port": 443,
-            "uuid": "0c869014-5ff1-4a1e-901f-198a9ee52ef9",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "hms17.mifixedfloat.top"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇮🇷 ·伊朗·TG@kkouokk·25",
-            "server": "beyonddsz.cfd",
-            "server_port": 443,
-            "uuid": "9b456c2a-f2c1-45e1-87a9-b7628b04bb24",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "beyonddsz.cfd"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·26",
-            "server": "lin0502.hwcar.sbs",
-            "server_port": 443,
-            "uuid": "39cec18f-a439-427c-9a4e-aeb6fcdf6f53",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "linja05.hwcar.sbs"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·27",
-            "server": "gt02.bestforxray.buzz",
-            "server_port": 443,
-            "uuid": "c1fd780a-3408-4f48-a932-5832a28ce9f6",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "ausgt02.bestforxray.buzz"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇺🇸 ·美国·TG@kkouokk·28",
-            "server": "gt021.bestforxray.buzz",
-            "server_port": 443,
-            "uuid": "c1fd780a-3408-4f48-a932-5832a28ce9f6",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/linkws",
-                "headers": {
-                    "Host": "ausgt02.bestforxray.buzz"
-                }
-            },
-            "tls": {
-                "enabled": true,
-                "insecure": false
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "type": "vmess",
-            "tag": "🇨🇳 ·中国·TG@kkouokk·151",
-            "server": "120.232.240.56",
-            "server_port": 16928,
-            "uuid": "5f6b3c3f-b0a8-33f5-95c6-371f8c6af973",
-            "alter_id": 0,
-            "security": "auto",
-            "transport": {
-                "type": "ws",
-                "path": "/v2ray",
-                "headers": {
-                    "Host": "%7B%22Host%22:%22193.25.215.160%22%7D"
-                }
-            },
-            "network": "tcp",
-            "tcp_fast_open": false
-        },
-        {
-            "tag": "♻️ 自动选择",
-            "type": "urltest",
-            "outbounds": [
-                "🇺🇸 ·美国·TG@kkouokk·19",
-                "🇺🇸 ·美国·TG@kkouokk·14",
-                "🇺🇸 ·美国·TG@kkouokk·15",
-                "🇮🇷 ·伊朗·TG@kkouokk·16",
-                "🇺🇸 ·美国·TG@kkouokk·17",
-                "🇺🇸 ·美国·TG@kkouokk·18",
-                "🇺🇸 ·美国·TG@kkouokk·20",
-                "🇫🇷 ·法国·TG@kkouokk·21",
-                "🇺🇸 ·美国·TG@kkouokk·22",
-                "🇺🇸 ·美国·TG@kkouokk·23",
-                "🇺🇸 ·美国·TG@kkouokk·24",
-                "🇮🇷 ·伊朗·TG@kkouokk·25",
-                "🇺🇸 ·美国·TG@kkouokk·26",
-                "🇺🇸 ·美国·TG@kkouokk·27",
-                "🇺🇸 ·美国·TG@kkouokk·28",
-                "🇨🇳 ·中国·TG@kkouokk·151"
-            ],
-            "url": "http://www.gstatic.com/generate_204",
-            "interval": "5m",
-            "tolerance": 50
-        },
-        {
-            "tag": "🚀 Proxy",
-            "type": "selector",
-            "outbounds": [
-                "♻️ 自动选择",
-                "🇺🇸 ·美国·TG@kkouokk·19",
-                "🇺🇸 ·美国·TG@kkouokk·14",
-                "🇺🇸 ·美国·TG@kkouokk·15",
-                "🇮🇷 ·伊朗·TG@kkouokk·16",
-                "🇺🇸 ·美国·TG@kkouokk·17",
-                "🇺🇸 ·美国·TG@kkouokk·18",
-                "🇺🇸 ·美国·TG@kkouokk·20",
-                "🇫🇷 ·法国·TG@kkouokk·21",
-                "🇺🇸 ·美国·TG@kkouokk·22",
-                "🇺🇸 ·美国·TG@kkouokk·23",
-                "🇺🇸 ·美国·TG@kkouokk·24",
-                "🇮🇷 ·伊朗·TG@kkouokk·25",
-                "🇺🇸 ·美国·TG@kkouokk·26",
-                "🇺🇸 ·美国·TG@kkouokk·27",
-                "🇺🇸 ·美国·TG@kkouokk·28",
-                "🇨🇳 ·中国·TG@kkouokk·151",
-                "🎯 Direct"
-            ]
-        },
-        {
-            "tag": "🎯 Direct",
-            "type": "direct"
-        },
-        {
-            "tag": "🈲 Block",
-            "type": "block"
-        },
-        {
-            "tag": "👀 dns-out",
-            "type": "dns"
-        }
-    ],
-    "route": {
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "dns_direct",
+        "disable_cache": true
+      },
+      {
+        "clash_mode": "Direct",
+        "server": "dns_direct"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "dns_remote"
+      },
+      {
         "rule_set": [
-            {
-                "tag": "geosite-geolocation-cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
-                "download_detour": "🚀 Proxy"
-            },
-            {
-                "tag": "geoip-cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
-                "download_detour": "🚀 Proxy"
-            },
-            {
-                "tag": "geosite-cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
-                "download_detour": "🚀 Proxy"
-            },
-            {
-                "tag": "geosite-telegram",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
-                "download_detour": "🚀 Proxy"
-            },
-            {
-                "tag": "geosite-geolocation-!cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
-                "download_detour": "🚀 Proxy"
-            }
+          "geoip-cn",
+          "geosite-geolocation-cn"
         ],
+        "server": "dns_direct"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
         "rules": [
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "protocol": "dns"
-                    },
-                    {
-                        "port": 53
-                    }
-                ],
-                "outbound": "👀 dns-out"
-            },
-            {
-                "clash_mode": "Direct",
-                "invert": false,
-                "outbound": "🎯 Direct"
-            },
-            {
-                "clash_mode": "Global",
-                "invert": false,
-                "outbound": "🚀 Proxy"
-            },
-            {
-                "ip_is_private": true,
-                "rule_set": [
-                    "geoip-cn",
-                    "geosite-geolocation-cn",
-                    "geosite-cn"
-                ],
-                "outbound": "🎯 Direct"
-            },
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 853
-                    },
-                    {
-                        "network": "udp",
-                        "port": 443
-                    },
-                    {
-                        "protocol": "stun"
-                    }
-                ],
-                "outbound": "🈲 Block"
-            },
-            {
-                "ip_cidr": [
-                    "91.108.56.0/22",
-                    "91.108.4.0/22",
-                    "91.108.8.0/22",
-                    "91.108.16.0/22",
-                    "91.108.12.0/22",
-                    "149.154.160.0/20",
-                    "91.105.192.0/23",
-                    "91.108.20.0/22",
-                    "185.76.151.0/24",
-                    "2001:b28:f23d::/48",
-                    "2001:b28:f23f::/48",
-                    "2001:67c:4e8::/48",
-                    "2001:b28:f23c::/48",
-                    "2a0a:f280::/32"
-                ],
-                "rule_set": [
-                    "geosite-telegram",
-                    "geosite-geolocation-!cn"
-                ],
-                "outbound": "🚀 Proxy"
-            }
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": [
+              "geoip-cn"
+            ]
+          }
         ],
-        "final": "🚀 Proxy",
-        "auto_detect_interface": true
+        "server": "dns_remote",
+        "client_subnet": "114.114.114.114/24"
+      },
+      {
+        "inbound": [
+          "mixed-in",
+          "tun-in"
+        ],
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "dns_fake",
+        "disable_cache": true,
+        "rewrite_ttl": 0
+      }
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "2001:db8::/64"
     },
-    "experimental": {
-        "cache_file": {
-            "enabled": true,
-            "path": "sing-box-cache.db",
-            "cache_id": "",
-            "store_fakeip": false
-        },
-        "clash_api": {
-            "external_controller": "127.0.0.1:9090",
-            "external_ui": "ui",
-            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
-            "external_ui_download_detour": "🚀 Proxy",
-            "default_mode": ""
+    "final": "dns_remote",
+    "strategy": "prefer_ipv4",
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": true,
+    "reverse_mapping": true
+  },
+  "inbounds": [
+    {
+      "tag": "mixed-in",
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 2080,
+      "sniff": true,
+      "sniff_override_destination": false,
+      "domain_strategy": "prefer_ipv4",
+      "set_system_proxy": false
+    },
+    {
+      "tag": "tun-in",
+      "type": "tun",
+      "interface_name": "tun0",
+      "address": [
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "mtu": 9000,
+      "auto_route": true,
+      "strict_route": true,
+      "endpoint_independent_nat": false,
+      "stack": "mixed",
+      "sniff": true,
+      "sniff_override_destination": false,
+      "domain_strategy": "prefer_ipv4",
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 1080
         }
+      }
     }
+  ],
+  "outbounds": [
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·1",
+      "server": "time.cloudflare.com",
+      "server_port": 8880,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
+      "server": "cdn-all.xn--b6gac.eu.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇰🇷 ·韩国·TG@kkouokk·3",
+      "server": "edgetunnel.anycast.eu.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·4",
+      "server": "edtunnel-dgp.pages.dev",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·5",
+      "server": "www.baipiao.eu.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇸🇬 ·新加坡·TG@kkouokk·6",
+      "server": "cdn-b100.xn--b6gac.eu.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·7",
+      "server": "xn--b6gac.eu.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇯🇵 ·日本·TG@kkouokk·8",
+      "server": "cdn.anycast.eu.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·9",
+      "server": "www.visa.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·10",
+      "server": "www.visa.com.sg",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·11",
+      "server": "www.udacity.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·12",
+      "server": "www.zsu.gov.ua",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇨🇦 ·加拿大·TG@kkouokk·13",
+      "server": "shopify.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·14",
+      "server": "www.visa.com.hk",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·15",
+      "server": "www.glassdoor.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·16",
+      "server": "www.visakorea.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·17",
+      "server": "www.okcupid.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·18",
+      "server": "www.digitalocean.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·19",
+      "server": "www.4chan.org",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·20",
+      "server": "www.visa.co.jp",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·21",
+      "server": "www.visa.com.tw",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·22",
+      "server": "www.udemy.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·23",
+      "server": "icook.hk",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
+      "server": "www.csgo.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·25",
+      "server": "www.boba88slot.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·26",
+      "server": "www.gov.se",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇸🇪 ·瑞典·TG@kkouokk·27",
+      "server": "www.shopify.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·28",
+      "server": "gur.gov.ua",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·29",
+      "server": "skk.moe",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·30",
+      "server": "www.whatismyip.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·31",
+      "server": "www.ipget.net",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·32",
+      "server": "log.bpminecraft.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·33",
+      "server": "www.iakeys.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·34",
+      "server": "alejandracaiccedo.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·35",
+      "server": "www.gov.ua",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇯🇵 ·日本·TG@kkouokk·36",
+      "server": "cdn-all.xijingping.link",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·37",
+      "server": "malaysia.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·38",
+      "server": "icook.tw",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·39",
+      "server": "russia.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·40",
+      "server": "japan.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·41",
+      "server": "www.hugedomains.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·42",
+      "server": "ip.sb",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·43",
+      "server": "www.whoer.net",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·44",
+      "server": "www.gco.gov.qa",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·45",
+      "server": "singapore.com",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "type": "vless",
+      "tag": "🇺🇸 ·美国·TG@kkouokk·46",
+      "server": "time.is",
+      "server_port": 80,
+      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "transport": {
+        "path": "/?ed=2048",
+        "type": "ws",
+        "headers": {
+          "Host": "kaka101.kkaa.workers.dev"
+        }
+      },
+      "network": "tcp",
+      "tcp_fast_open": false
+    },
+    {
+      "tag": "♻️ 自动选择",
+      "type": "urltest",
+      "outbounds": [
+        "🇺🇸 ·美国·TG@kkouokk·1",
+        "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
+        "🇰🇷 ·韩国·TG@kkouokk·3",
+        "🇺🇸 ·美国·TG@kkouokk·4",
+        "🇺🇸 ·美国·TG@kkouokk·5",
+        "🇸🇬 ·新加坡·TG@kkouokk·6",
+        "🇺🇸 ·美国·TG@kkouokk·7",
+        "🇯🇵 ·日本·TG@kkouokk·8",
+        "🇺🇸 ·美国·TG@kkouokk·9",
+        "🇺🇸 ·美国·TG@kkouokk·10",
+        "🇺🇸 ·美国·TG@kkouokk·11",
+        "🇺🇸 ·美国·TG@kkouokk·12",
+        "🇨🇦 ·加拿大·TG@kkouokk·13",
+        "🇺🇸 ·美国·TG@kkouokk·14",
+        "🇺🇸 ·美国·TG@kkouokk·15",
+        "🇺🇸 ·美国·TG@kkouokk·16",
+        "🇺🇸 ·美国·TG@kkouokk·17",
+        "🇺🇸 ·美国·TG@kkouokk·18",
+        "🇺🇸 ·美国·TG@kkouokk·19",
+        "🇺🇸 ·美国·TG@kkouokk·20",
+        "🇺🇸 ·美国·TG@kkouokk·21",
+        "🇺🇸 ·美国·TG@kkouokk·22",
+        "🇺🇸 ·美国·TG@kkouokk·23",
+        "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
+        "🇺🇸 ·美国·TG@kkouokk·25",
+        "🇺🇸 ·美国·TG@kkouokk·26",
+        "🇸🇪 ·瑞典·TG@kkouokk·27",
+        "🇺🇸 ·美国·TG@kkouokk·28",
+        "🇺🇸 ·美国·TG@kkouokk·29",
+        "🇺🇸 ·美国·TG@kkouokk·30",
+        "🇺🇸 ·美国·TG@kkouokk·31",
+        "🇺🇸 ·美国·TG@kkouokk·32",
+        "🇺🇸 ·美国·TG@kkouokk·33",
+        "🇺🇸 ·美国·TG@kkouokk·34",
+        "🇺🇸 ·美国·TG@kkouokk·35",
+        "🇯🇵 ·日本·TG@kkouokk·36",
+        "🇺🇸 ·美国·TG@kkouokk·37",
+        "🇺🇸 ·美国·TG@kkouokk·38",
+        "🇺🇸 ·美国·TG@kkouokk·39",
+        "🇺🇸 ·美国·TG@kkouokk·40",
+        "🇺🇸 ·美国·TG@kkouokk·41",
+        "🇺🇸 ·美国·TG@kkouokk·42",
+        "🇺🇸 ·美国·TG@kkouokk·43",
+        "🇺🇸 ·美国·TG@kkouokk·44",
+        "🇺🇸 ·美国·TG@kkouokk·45",
+        "🇺🇸 ·美国·TG@kkouokk·46"
+      ],
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 50
+    },
+    {
+      "tag": "🚀 Proxy",
+      "type": "selector",
+      "outbounds": [
+        "♻️ 自动选择",
+        "🇺🇸 ·美国·TG@kkouokk·1",
+        "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
+        "🇰🇷 ·韩国·TG@kkouokk·3",
+        "🇺🇸 ·美国·TG@kkouokk·4",
+        "🇺🇸 ·美国·TG@kkouokk·5",
+        "🇸🇬 ·新加坡·TG@kkouokk·6",
+        "🇺🇸 ·美国·TG@kkouokk·7",
+        "🇯🇵 ·日本·TG@kkouokk·8",
+        "🇺🇸 ·美国·TG@kkouokk·9",
+        "🇺🇸 ·美国·TG@kkouokk·10",
+        "🇺🇸 ·美国·TG@kkouokk·11",
+        "🇺🇸 ·美国·TG@kkouokk·12",
+        "🇨🇦 ·加拿大·TG@kkouokk·13",
+        "🇺🇸 ·美国·TG@kkouokk·14",
+        "🇺🇸 ·美国·TG@kkouokk·15",
+        "🇺🇸 ·美国·TG@kkouokk·16",
+        "🇺🇸 ·美国·TG@kkouokk·17",
+        "🇺🇸 ·美国·TG@kkouokk·18",
+        "🇺🇸 ·美国·TG@kkouokk·19",
+        "🇺🇸 ·美国·TG@kkouokk·20",
+        "🇺🇸 ·美国·TG@kkouokk·21",
+        "🇺🇸 ·美国·TG@kkouokk·22",
+        "🇺🇸 ·美国·TG@kkouokk·23",
+        "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
+        "🇺🇸 ·美国·TG@kkouokk·25",
+        "🇺🇸 ·美国·TG@kkouokk·26",
+        "🇸🇪 ·瑞典·TG@kkouokk·27",
+        "🇺🇸 ·美国·TG@kkouokk·28",
+        "🇺🇸 ·美国·TG@kkouokk·29",
+        "🇺🇸 ·美国·TG@kkouokk·30",
+        "🇺🇸 ·美国·TG@kkouokk·31",
+        "🇺🇸 ·美国·TG@kkouokk·32",
+        "🇺🇸 ·美国·TG@kkouokk·33",
+        "🇺🇸 ·美国·TG@kkouokk·34",
+        "🇺🇸 ·美国·TG@kkouokk·35",
+        "🇯🇵 ·日本·TG@kkouokk·36",
+        "🇺🇸 ·美国·TG@kkouokk·37",
+        "🇺🇸 ·美国·TG@kkouokk·38",
+        "🇺🇸 ·美国·TG@kkouokk·39",
+        "🇺🇸 ·美国·TG@kkouokk·40",
+        "🇺🇸 ·美国·TG@kkouokk·41",
+        "🇺🇸 ·美国·TG@kkouokk·42",
+        "🇺🇸 ·美国·TG@kkouokk·43",
+        "🇺🇸 ·美国·TG@kkouokk·44",
+        "🇺🇸 ·美国·TG@kkouokk·45",
+        "🇺🇸 ·美国·TG@kkouokk·46"
+      ]
+    },
+    {
+      "tag": "🈲 Block",
+      "type": "block"
+    },
+    {
+      "tag": "👀 dns-out",
+      "type": "dns"
+    }
+  ],
+  "route": {
+    "rule_set": [
+      {
+        "tag": "geosite-geolocation-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+        "download_detour": "🚀 Proxy"
+      },
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "download_detour": "🚀 Proxy"
+      },
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
+        "download_detour": "🚀 Proxy"
+      },
+      {
+        "tag": "geosite-telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
+        "download_detour": "🚀 Proxy"
+      },
+      {
+        "tag": "geosite-geolocation-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
+        "download_detour": "🚀 Proxy"
+      }
+    ],
+    "rules": [
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "outbound": "👀 dns-out"
+      },
+      {
+        "clash_mode": "Direct",
+        "invert": false,
+        "outbound": "🎯 Direct"
+      },
+      {
+        "clash_mode": "Global",
+        "invert": false,
+        "outbound": "🚀 Proxy"
+      },
+      {
+        "ip_is_private": true,
+        "rule_set": [
+          "geoip-cn",
+          "geosite-geolocation-cn",
+          "geosite-cn"
+        ],
+        "outbound": "🎯 Direct"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "🈲 Block"
+      },
+      {
+        "ip_cidr": [
+          "91.108.56.0/22",
+          "91.108.4.0/22",
+          "91.108.8.0/22",
+          "91.108.16.0/22",
+          "91.108.12.0/22",
+          "149.154.160.0/20",
+          "91.105.192.0/23",
+          "91.108.20.0/22",
+          "185.76.151.0/24",
+          "2001:b28:f23d::/48",
+          "2001:b28:f23f::/48",
+          "2001:67c:4e8::/48",
+          "2001:b28:f23c::/48",
+          "2a0a:f280::/32"
+        ],
+        "rule_set": [
+          "geosite-telegram",
+          "geosite-geolocation-!cn"
+        ],
+        "outbound": "🚀 Proxy"
+      }
+    ],
+    "final": "🚀 Proxy",
+    "auto_detect_interface": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "sing-box-cache.db",
+      "cache_id": "",
+      "store_fakeip": false
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "ui",
+      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
+      "external_ui_download_detour": "🚀 Proxy",
+      "default_mode": ""
+    }
+  }
 }
