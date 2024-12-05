@@ -1120,7 +1120,7 @@
       "external_ui": "ui",
       "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
       "external_ui_download_detour": "🚀 Proxy",
-      "default_mode": ""
+      "default_mode": "Rule"
     }
   }
 }

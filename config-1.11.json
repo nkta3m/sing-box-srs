@@ -186,6 +186,26 @@
         "method": "drop"
       },
       {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": [
+              "bittorrent",
+              "ssh",
+              "rdp"
+            ]
+          },
+          {
+            "rule_set": [
+              "geoip-cn",
+              "geosite-geolocation-cn"
+            ]
+          }
+        ],
+        "outbound": "🎯 Direct"
+      },
+      {
         "ip_cidr": [
           "91.108.56.0/22",
           "91.108.4.0/22",
