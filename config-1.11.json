@@ -7,26 +7,13 @@
     "servers": [
       {
         "tag": "dns_remote",
-        "address": "https://dns.google/dns-query",
-        "address_resolver": "dns_resolver",
+        "address": "8.8.8.8",
         "strategy": "prefer_ipv4",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
-        "address": "https://dns.alidns.com/dns-query",
-        "address_resolver": "dns_resolver",
-        "strategy": "prefer_ipv4",
-        "detour": "🎯 Direct"
-      },
-      {
-        "tag": "dns_resolver",
         "address": "223.5.5.5",
-        "detour": "🎯 Direct"
-      },
-      {
-        "tag": "dns_fake",
-        "address": "fakeip",
         "strategy": "prefer_ipv4"
       }
     ],
@@ -38,10 +25,6 @@
       {
         "clash_mode": "Global",
         "server": "dns_remote"
-      },
-      {
-        "outbound": "any",
-        "server": "dns_direct"
       },
       {
         "rule_set": [
@@ -78,21 +61,15 @@
           "AAAA"
         ],
         "action": "route-options",
-        "server": "dns_fake",
+        "server": "dns_remote",
         "disable_cache": true,
         "rewrite_ttl": 0
       }
     ],
     "final": "dns_remote",
-    "independent_cache": true,
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "2001:db8::/64"
-    }
+    "independent_cache": true
   },
   "route": {
-    "find_process": true,
     "rule_set": [
       {
         "tag": "geosite-geolocation-cn",
@@ -1116,7 +1093,6 @@
     "cache_file": {
       "enabled": true,
       "path": "",
-      "store_fakeip": true,
       "store_rdrc": true
     },
     "clash_api": {
