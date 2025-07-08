@@ -9,14 +9,20 @@
         "tag": "dns_remote",
         "type": "udp",
         "server": "8.8.8.8",
-        "strategy": "prefer_ipv4",
+        "domain_resolver": {
+          "server": "local",
+          "strategy": "prefer_ipv4"
+        },
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
         "type": "udp",
         "server": "223.5.5.5",
-        "strategy": "prefer_ipv4"
+        "domain_resolver": {
+          "server": "local",
+          "strategy": "prefer_ipv4"
+        }
       },
       {
         "tag": "local",
@@ -80,7 +86,7 @@
       "server": "local",
       "rewrite_ttl": 60,
       "client_subnet": "1.1.1.1"
-    }
+    },
     "rule_set": [
       {
         "tag": "geosite-geolocation-cn",
