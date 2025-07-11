@@ -8,18 +8,13 @@
       {
         "tag": "dns_remote",
         "address": "8.8.8.8",
-        "strategy": "prefer_ipv4",
+        "strategy": "ipv4_only",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
         "address": "223.5.5.5",
-        "strategy": "prefer_ipv4"
-      },
-      {
-        "tag": "bootstrap_dns",
-        "address": "9.9.9.9",
-        "strategy": "prefer_ipv4"
+        "strategy": "ipv4_only"
       },
       {
         "tag": "local",
@@ -37,7 +32,7 @@
       },
       {
         "outbound": "any",
-        "server": "dns_direct"
+        "server": "local"
       },
       {
         "rule_set": [
@@ -70,8 +65,7 @@
           "tun-in"
         ],
         "query_type": [
-          "A",
-          "AAAA"
+          "A"
         ],
         "action": "route-options",
         "server": "dns_remote",
@@ -127,7 +121,7 @@
           "tun-in"
         ],
         "action": "resolve",
-        "strategy": "prefer_ipv4"
+        "strategy": "ipv4_only"
       },
       {
         "action": "sniff"
