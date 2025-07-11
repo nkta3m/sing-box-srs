@@ -18,7 +18,7 @@
       },
       {
         "tag": "bootstrap_dns",
-        "address": "1.1.1.1", // Cloudflare DNS，未被墙
+        "address": "9.9.9.9",
         "strategy": "prefer_ipv4"
       },
       {
