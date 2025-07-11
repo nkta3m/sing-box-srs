@@ -7,14 +7,20 @@
     "servers": [
       {
         "tag": "dns_remote",
-        "address": "8.8.8.8",
+        "address": "https://1.1.1.1/dns-query",
+        "address_resolver": "dns_resolver",
         "strategy": "ipv4_only",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
-        "address": "223.5.5.5",
+        "address": "https://dns.alidns.com/dns-query",
+        "address_resolver": "dns_resolver",
         "strategy": "ipv4_only"
+      },
+      {
+        "tag": "dns_resolver",
+        "address": "223.5.5.5"
       },
       {
         "tag": "local",
