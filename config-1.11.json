@@ -37,7 +37,7 @@
       },
       {
         "outbound": "any",
-        "server": "bootstrap_dns"
+        "server": "dns_direct"
       },
       {
         "rule_set": [
