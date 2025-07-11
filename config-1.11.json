@@ -32,7 +32,8 @@
       },
       {
         "outbound": "any",
-        "server": "local"
+        "server": "dns_direct",
+        "disable_cache": true
       },
       {
         "rule_set": [
