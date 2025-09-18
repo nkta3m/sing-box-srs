@@ -127,6 +127,7 @@
           "mixed-in",
           "tun-in"
         ],
+        "ip_version": 4,
         "action": "resolve",
         "strategy": "ipv4_only"
       },
