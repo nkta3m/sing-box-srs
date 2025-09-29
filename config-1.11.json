@@ -9,14 +9,14 @@
         "tag": "dns_remote",
         "address": "https://dns.google/dns-query",
         "address_resolver": "dns_resolver",
-        "strategy": "ipv4_only",
+        "address_strategy": "ipv4_only",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
         "address": "https://dns.alidns.com/dns-query",
         "address_resolver": "dns_resolver",
-        "strategy": "ipv4_only"
+        "address_strategy": "ipv4_only"
       },
       {
         "tag": "dns_resolver",
@@ -38,7 +38,7 @@
       },
       {
         "outbound": "any",
-        "server": "local",
+        "server": "dns_direct",
         "disable_cache": true
       },
       {
@@ -62,25 +62,26 @@
             ]
           }
         ],
-        "action": "route-options",
-        "server": "dns_remote",
-        "client_subnet": "114.114.114.114/24"
+        "action": "route",
+        "server": "dns_remote"
       },
       {
         "inbound": [
           "mixed-in",
           "tun-in"
         ],
+        "ip_version": 4,
         "query_type": [
           "A"
         ],
-        "action": "route-options",
+        "action": "route",
         "server": "dns_remote",
         "disable_cache": true,
         "rewrite_ttl": 0
       }
     ],
     "final": "dns_remote",
+    "strategy": "ipv4_only",
     "independent_cache": true
   },
   "route": {
@@ -202,6 +203,7 @@
           "geosite-telegram",
           "geosite-geolocation-!cn"
         ],
+        "ip_version": 4,
         "outbound": "🚀 Proxy"
       }
     ],
@@ -228,14 +230,7 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "system",
-      "endpoint_independent_nat": false,
-      "platform": {
-        "http_proxy": {
-          "enabled": true,
-          "server": "127.0.0.1",
-          "server_port": 1080
-        }
-      }
+      "endpoint_independent_nat": false
     }
   ],
   "outbounds": [
@@ -245,6 +240,7 @@
       "server": "time.cloudflare.com",
       "server_port": 8880,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -252,8 +248,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -261,6 +256,7 @@
       "server": "cdn-all.xn--b6gac.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -268,8 +264,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -277,6 +272,7 @@
       "server": "edgetunnel.anycast.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -284,8 +280,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -293,6 +288,7 @@
       "server": "edtunnel-dgp.pages.dev",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -300,8 +296,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -309,6 +304,7 @@
       "server": "www.baipiao.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -316,8 +312,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -325,6 +320,7 @@
       "server": "cdn-b100.xn--b6gac.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -332,8 +328,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -341,6 +336,7 @@
       "server": "xn--b6gac.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -348,8 +344,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -357,6 +352,7 @@
       "server": "cdn.anycast.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -364,8 +360,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -373,6 +368,7 @@
       "server": "www.visa.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -380,8 +376,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -389,6 +384,7 @@
       "server": "www.visa.com.sg",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -396,8 +392,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -405,6 +400,7 @@
       "server": "www.udacity.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -412,8 +408,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -421,6 +416,7 @@
       "server": "www.zsu.gov.ua",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -428,8 +424,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -437,6 +432,7 @@
       "server": "shopify.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -444,8 +440,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -453,6 +448,7 @@
       "server": "www.visa.com.hk",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -460,8 +456,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -469,6 +464,7 @@
       "server": "www.glassdoor.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -476,8 +472,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -485,6 +480,7 @@
       "server": "www.visakorea.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -492,8 +488,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -501,6 +496,7 @@
       "server": "www.okcupid.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -508,8 +504,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -517,6 +512,7 @@
       "server": "www.digitalocean.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -524,8 +520,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -533,6 +528,7 @@
       "server": "www.4chan.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -540,8 +536,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -549,6 +544,7 @@
       "server": "www.visa.co.jp",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -556,8 +552,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -565,6 +560,7 @@
       "server": "www.visa.com.tw",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -572,8 +568,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -581,6 +576,7 @@
       "server": "www.udemy.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -588,8 +584,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -597,6 +592,7 @@
       "server": "icook.hk",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -604,8 +600,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -613,6 +608,7 @@
       "server": "www.csgo.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -620,8 +616,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -629,6 +624,7 @@
       "server": "www.boba88slot.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -636,8 +632,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -645,6 +640,7 @@
       "server": "www.gov.se",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -652,8 +648,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -661,6 +656,7 @@
       "server": "www.shopify.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -668,8 +664,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -677,6 +672,7 @@
       "server": "gur.gov.ua",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -684,8 +680,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -693,6 +688,7 @@
       "server": "skk.moe",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -700,8 +696,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -709,6 +704,7 @@
       "server": "www.whatismyip.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -716,8 +712,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -725,6 +720,7 @@
       "server": "www.ipget.net",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -732,8 +728,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -741,6 +736,7 @@
       "server": "log.bpminecraft.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -748,8 +744,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -757,6 +752,7 @@
       "server": "www.iakeys.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -764,8 +760,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -773,6 +768,7 @@
       "server": "alejandracaiccedo.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -780,8 +776,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -789,6 +784,7 @@
       "server": "www.gov.ua",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -796,8 +792,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -805,6 +800,7 @@
       "server": "cdn-all.xijingping.link",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -812,8 +808,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -821,6 +816,7 @@
       "server": "malaysia.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -828,8 +824,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -837,6 +832,7 @@
       "server": "icook.tw",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -844,8 +840,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -853,6 +848,7 @@
       "server": "russia.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -860,8 +856,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -869,6 +864,7 @@
       "server": "japan.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -876,8 +872,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -885,6 +880,7 @@
       "server": "www.hugedomains.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -892,8 +888,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -901,6 +896,7 @@
       "server": "ip.sb",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -908,8 +904,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -917,6 +912,7 @@
       "server": "www.whoer.net",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -924,8 +920,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -933,6 +928,7 @@
       "server": "www.gco.gov.qa",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -940,8 +936,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -949,6 +944,7 @@
       "server": "singapore.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -956,8 +952,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "type": "vless",
@@ -965,6 +960,7 @@
       "server": "time.is",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+      "domain_strategy": "ipv4_only",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -972,8 +968,7 @@
           "Host": "kaka101.kkaa.workers.dev"
         }
       },
-      "network": "tcp",
-      "tcp_fast_open": false
+      "network": "tcp"
     },
     {
       "tag": "♻️ 自动选择",
