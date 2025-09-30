@@ -23,16 +23,16 @@
         "address": "223.5.5.5"
       },
       {
-          "tag": "dns_ipv4_only",
-          "address": "8.8.8.8",
-          "strategy": "ipv4_only",
-          "detour": "🚀 Proxy"
+        "tag": "dns_ipv4_only",
+        "address": "8.8.8.8",
+        "strategy": "ipv4_only",
+        "detour": "🚀 Proxy"
       },
       {
-          "tag": "dns_ipv6_only",
-          "address": "[2001:4860:4860::8888]",
-          "strategy": "ipv6_only",
-          "detour": "🚀 Proxy"
+        "tag": "dns_ipv6_only",
+        "address": "[2001:4860:4860::8888]",
+        "strategy": "ipv6_only",
+        "detour": "🚀 Proxy"
       },
       {
         "tag": "local",
@@ -83,19 +83,19 @@
           "tun-in"
         ],
         "query_type": [
-              "AAAA"
-          ],
-          "action": "route-options",
-          "server": "dns_ipv6_only",
-          "disable_cache": true,
-          "rewrite_ttl": 0
+          "AAAA"
+        ],
+        "action": "route-options",
+        "server": "dns_ipv6_only",
+        "disable_cache": true,
+        "rewrite_ttl": 0
       },
       {
-          "inbound": [
-              "mixed-in",
-              "tun-in"
-          ],
-          "query_type": [
+        "inbound": [
+          "mixed-in",
+          "tun-in"
+        ],
+        "query_type": [
           "A"
         ],
         "action": "route-options",
@@ -157,14 +157,14 @@
         "server": "dns_ipv4_only"
       },
       {
-          "inbound": [
-              "mixed-in",
-              "tun-in"
-          ],
-          "ip_version": 6,
-          "action": "resolve",
-          "strategy": "ipv6_only",
-          "server": "dns_ipv6_only"
+        "inbound": [
+          "mixed-in",
+          "tun-in"
+        ],
+        "ip_version": 6,
+        "action": "resolve",
+        "strategy": "ipv6_only",
+        "server": "dns_ipv6_only"
       },
       {
         "action": "sniff"

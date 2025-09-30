@@ -32,7 +32,7 @@
       {
         "tag": "dns_ipv4_only",
         "type": "udp",
-        "server": "185.228.169.11",
+        "server": "8.8.8.8",
         "domain_resolver": {
           "server": "dns_resolver",
           "strategy": "ipv4_only"
@@ -42,7 +42,7 @@
       {
         "tag": "dns_ipv6_only",
         "type": "udp",
-        "server": "[2a0d:2a00:1::1]",
+        "server": "[2001:4860:4860::8888]",
         "domain_resolver": {
           "server": "dns_resolver",
           "strategy": "ipv6_only"
@@ -1208,7 +1208,7 @@
         "🇺🇸 ·美国·TG@kkouokk·45",
         "🇺🇸 ·美国·TG@kkouokk·46"
       ],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "http://cp.cloudflare.com/generate_204",
       "interval": "5m",
       "tolerance": 50
     },
