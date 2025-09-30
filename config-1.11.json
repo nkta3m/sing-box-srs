@@ -9,14 +9,14 @@
         "tag": "dns_remote",
         "address": "https://dns.google/dns-query",
         "address_resolver": "dns_resolver",
-        "strategy": "ipv4_only",
+        "strategy": "prefer_ipv4",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
         "address": "https://dns.alidns.com/dns-query",
         "address_resolver": "dns_resolver",
-        "strategy": "ipv4_only"
+        "strategy": "prefer_ipv4"
       },
       {
         "tag": "dns_resolver",
@@ -24,13 +24,15 @@
       },
       {
         "tag": "dns_ipv4_only",
-        "address": "8.8.8.8",
+        "address": "https://dns.google/dns-query",
+        "address_resolver": "dns_resolver",
         "strategy": "ipv4_only",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_ipv6_only",
-        "address": "[2001:4860:4860::8888]",
+        "address": "https://dns.google/dns-query",
+        "address_resolver": "dns_resolver",
         "strategy": "ipv6_only",
         "detour": "🚀 Proxy"
       },
@@ -240,7 +242,7 @@
         "outbound": "🚀 Proxy"
       }
     ],
-    "final": "🚀 Proxy",
+    "final": "🏁 Final",
     "auto_detect_interface": true
   },
   "inbounds": [
@@ -273,7 +275,7 @@
       "server": "time.cloudflare.com",
       "server_port": 8880,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -289,7 +291,7 @@
       "server": "cdn-all.xn--b6gac.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -305,7 +307,7 @@
       "server": "edgetunnel.anycast.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -321,7 +323,7 @@
       "server": "edtunnel-dgp.pages.dev",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -337,7 +339,7 @@
       "server": "www.baipiao.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -353,7 +355,7 @@
       "server": "cdn-b100.xn--b6gac.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -369,7 +371,7 @@
       "server": "xn--b6gac.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -385,7 +387,7 @@
       "server": "cdn.anycast.eu.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -401,7 +403,7 @@
       "server": "www.visa.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -417,7 +419,7 @@
       "server": "www.visa.com.sg",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -433,7 +435,7 @@
       "server": "www.udacity.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -449,7 +451,7 @@
       "server": "www.zsu.gov.ua",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -465,7 +467,7 @@
       "server": "shopify.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -481,7 +483,7 @@
       "server": "www.visa.com.hk",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -497,7 +499,7 @@
       "server": "www.glassdoor.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -513,7 +515,7 @@
       "server": "www.visakorea.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -529,7 +531,7 @@
       "server": "www.okcupid.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -545,7 +547,7 @@
       "server": "www.digitalocean.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -561,7 +563,7 @@
       "server": "www.4chan.org",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -577,7 +579,7 @@
       "server": "www.visa.co.jp",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -593,7 +595,7 @@
       "server": "www.visa.com.tw",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -609,7 +611,7 @@
       "server": "www.udemy.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -625,7 +627,7 @@
       "server": "icook.hk",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -641,7 +643,7 @@
       "server": "www.csgo.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -657,7 +659,7 @@
       "server": "www.boba88slot.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -673,7 +675,7 @@
       "server": "www.gov.se",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -689,7 +691,7 @@
       "server": "www.shopify.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -705,7 +707,7 @@
       "server": "gur.gov.ua",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -721,7 +723,7 @@
       "server": "skk.moe",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -737,7 +739,7 @@
       "server": "www.whatismyip.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -753,7 +755,7 @@
       "server": "www.ipget.net",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -769,7 +771,7 @@
       "server": "log.bpminecraft.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -785,7 +787,7 @@
       "server": "www.iakeys.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -801,7 +803,7 @@
       "server": "alejandracaiccedo.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -817,7 +819,7 @@
       "server": "www.gov.ua",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -833,7 +835,7 @@
       "server": "cdn-all.xijingping.link",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -849,7 +851,7 @@
       "server": "malaysia.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -865,7 +867,7 @@
       "server": "icook.tw",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -881,7 +883,7 @@
       "server": "russia.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -897,7 +899,7 @@
       "server": "japan.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -913,7 +915,7 @@
       "server": "www.hugedomains.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -929,7 +931,7 @@
       "server": "ip.sb",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -945,7 +947,7 @@
       "server": "www.whoer.net",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -961,7 +963,7 @@
       "server": "www.gco.gov.qa",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -977,7 +979,7 @@
       "server": "singapore.com",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -993,7 +995,7 @@
       "server": "time.is",
       "server_port": 80,
       "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "ipv4_only",
+      "domain_strategy": "prefer_ipv4",
       "transport": {
         "path": "/?ed=2048",
         "type": "ws",
@@ -1109,6 +1111,14 @@
         "🇺🇸 ·美国·TG@kkouokk·44",
         "🇺🇸 ·美国·TG@kkouokk·45",
         "🇺🇸 ·美国·TG@kkouokk·46"
+      ]
+    },
+    {
+      "tag": "🏁 Final",
+      "type": "selector",
+      "outbounds": [
+        "🎯 Direct",
+        "🚀 Proxy"
       ]
     },
     {
