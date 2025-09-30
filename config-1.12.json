@@ -11,7 +11,7 @@
         "server": "dns.google",
         "domain_resolver": {
           "server": "dns_resolver",
-          "strategy": "ipv4_only"
+          "strategy": "prefer_ipv4"
         },
         "detour": "🚀 Proxy"
       },
@@ -21,13 +21,33 @@
         "server": "dns.alidns.com",
         "domain_resolver": {
           "server": "dns_resolver",
-          "strategy": "ipv4_only"
+          "strategy": "prefer_ipv4"
         }
       },
       {
         "tag": "dns_resolver",
         "type": "udp",
         "server": "223.5.5.5"
+      },
+      {
+        "tag": "dns_ipv4_only",
+        "type": "udp",
+        "server": "185.228.169.11",
+        "domain_resolver": {
+          "server": "dns_resolver",
+          "strategy": "ipv4_only"
+        },
+        "detour": "🚀 Proxy"
+      },
+      {
+        "tag": "dns_ipv6_only",
+        "type": "udp",
+        "server": "[2a0d:2a00:1::1]",
+        "domain_resolver": {
+          "server": "dns_resolver",
+          "strategy": "ipv6_only"
+        },
+        "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_system",
@@ -64,33 +84,43 @@
             ]
           }
         ],
-        "action": "route",
+        "action": "route-options",
         "server": "dns_remote",
-        "strategy": "ipv4_only"
+        "client_subnet": "114.114.114.114/24"
       },
       {
         "inbound": [
           "mixed-in",
           "tun-in"
         ],
-        "ip_version": 4,
+        "query_type": [
+          "AAAA"
+        ],
+        "action": "route-options",
+        "server": "dns_ipv6_only",
+        "disable_cache": true,
+        "rewrite_ttl": 0
+      },
+      {
+        "inbound": [
+          "mixed-in",
+          "tun-in"
+        ],
         "query_type": [
           "A"
         ],
-        "action": "route",
-        "server": "dns_remote",
-        "strategy": "ipv4_only",
+        "action": "route-options",
+        "server": "dns_ipv4_only",
         "disable_cache": true,
         "rewrite_ttl": 0
       }
     ],
     "final": "dns_remote",
-    "strategy": "ipv4_only",
     "independent_cache": true
   },
   "route": {
     "default_domain_resolver": {
-      "server": "dns_remote",
+      "server": "dns_system",
       "rewrite_ttl": 60,
       "client_subnet": "1.1.1.1"
     },
@@ -139,7 +169,18 @@
         ],
         "ip_version": 4,
         "action": "resolve",
-        "strategy": "ipv4_only"
+        "strategy": "ipv4_only",
+        "server": "dns_ipv4_only"
+      },
+      {
+        "inbound": [
+          "mixed-in",
+          "tun-in"
+        ],
+        "ip_version": 6,
+        "action": "resolve",
+        "strategy": "ipv6_only",
+        "server": "dns_ipv6_only"
       },
       {
         "action": "sniff"
@@ -212,7 +253,6 @@
           "geosite-telegram",
           "geosite-geolocation-!cn"
         ],
-        "ip_version": 4,
         "outbound": "🚀 Proxy"
       }
     ],
