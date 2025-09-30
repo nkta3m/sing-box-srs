@@ -9,18 +9,30 @@
         "tag": "dns_remote",
         "address": "https://dns.google/dns-query",
         "address_resolver": "dns_resolver",
-        "address_strategy": "ipv4_only",
+        "strategy": "ipv4_only",
         "detour": "🚀 Proxy"
       },
       {
         "tag": "dns_direct",
         "address": "https://dns.alidns.com/dns-query",
         "address_resolver": "dns_resolver",
-        "address_strategy": "ipv4_only"
+        "strategy": "ipv4_only"
       },
       {
         "tag": "dns_resolver",
         "address": "223.5.5.5"
+      },
+      {
+          "tag": "dns_ipv4_only",
+          "address": "8.8.8.8",
+          "strategy": "ipv4_only",
+          "detour": "🚀 Proxy"
+      },
+      {
+          "tag": "dns_ipv6_only",
+          "address": "[2001:4860:4860::8888]",
+          "strategy": "ipv6_only",
+          "detour": "🚀 Proxy"
       },
       {
         "tag": "local",
@@ -38,8 +50,7 @@
       },
       {
         "outbound": "any",
-        "server": "dns_direct",
-        "disable_cache": true
+        "server": "local"
       },
       {
         "rule_set": [
@@ -62,26 +73,38 @@
             ]
           }
         ],
-        "action": "route",
-        "server": "dns_remote"
+        "action": "route-options",
+        "server": "dns_remote",
+        "client_subnet": "114.114.114.114/24"
       },
       {
         "inbound": [
           "mixed-in",
           "tun-in"
         ],
-        "ip_version": 4,
         "query_type": [
+              "AAAA"
+          ],
+          "action": "route-options",
+          "server": "dns_ipv6_only",
+          "disable_cache": true,
+          "rewrite_ttl": 0
+      },
+      {
+          "inbound": [
+              "mixed-in",
+              "tun-in"
+          ],
+          "query_type": [
           "A"
         ],
-        "action": "route",
+        "action": "route-options",
         "server": "dns_remote",
         "disable_cache": true,
         "rewrite_ttl": 0
       }
     ],
     "final": "dns_remote",
-    "strategy": "ipv4_only",
     "independent_cache": true
   },
   "route": {
@@ -131,6 +154,17 @@
         "ip_version": 4,
         "action": "resolve",
         "strategy": "ipv4_only"
+        "server": "dns_ipv4_only"
+      },
+      {
+          "inbound": [
+              "mixed-in",
+              "tun-in"
+          ],
+          "ip_version": 6,
+          "action": "resolve",
+          "strategy": "ipv6_only",
+          "server": "dns_ipv6_only"
       },
       {
         "action": "sniff"
@@ -203,7 +237,6 @@
           "geosite-telegram",
           "geosite-geolocation-!cn"
         ],
-        "ip_version": 4,
         "outbound": "🚀 Proxy"
       }
     ],
@@ -1021,7 +1054,7 @@
         "🇺🇸 ·美国·TG@kkouokk·45",
         "🇺🇸 ·美国·TG@kkouokk·46"
       ],
-      "url": "http://www.gstatic.com/generate_204",
+      "url": "http://cp.cloudflare.com/generate_204",
       "interval": "5m",
       "tolerance": 50
     },
