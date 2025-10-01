@@ -1,1147 +1,1299 @@
 {
-  "log": {
-    "level": "panic",
-    "timestamp": true
-  },
-  "dns": {
-    "servers": [
-      {
-        "tag": "dns_remote",
-        "address": "https://dns.google/dns-query",
-        "address_resolver": "dns_resolver",
-        "strategy": "prefer_ipv4",
-        "detour": "🚀 Proxy"
-      },
-      {
-        "tag": "dns_direct",
-        "address": "https://dns.alidns.com/dns-query",
-        "address_resolver": "dns_resolver",
-        "strategy": "prefer_ipv4"
-      },
-      {
-        "tag": "dns_resolver",
-        "address": "223.5.5.5"
-      },
-      {
-        "tag": "dns_ipv4_only",
-        "address": "https://dns.google/dns-query",
-        "address_resolver": "dns_resolver",
-        "strategy": "ipv4_only",
-        "detour": "🚀 Proxy"
-      },
-      {
-        "tag": "dns_ipv6_only",
-        "address": "https://dns.google/dns-query",
-        "address_resolver": "dns_resolver",
-        "strategy": "ipv6_only",
-        "detour": "🚀 Proxy"
-      },
-      {
-        "tag": "local",
-        "address": "local"
-      }
-    ],
-    "rules": [
-      {
-        "clash_mode": "Direct",
-        "server": "dns_direct"
-      },
-      {
-        "clash_mode": "Global",
-        "server": "dns_remote"
-      },
-      {
-        "outbound": "any",
-        "server": "local"
-      },
-      {
+    "log": {
+        "level": "panic",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns_remote",
+                "address": "https://dns.google/dns-query",
+                "address_resolver": "dns_resolver",
+                "strategy": "prefer_ipv4",
+                "detour": "🚀 Proxy"
+            },
+            {
+                "tag": "dns_direct",
+                "address": "https://dns.alidns.com/dns-query",
+                "address_resolver": "dns_resolver",
+                "strategy": "prefer_ipv4"
+            },
+            {
+                "tag": "dns_resolver",
+                "address": "223.5.5.5"
+            },
+            {
+                "tag": "dns_ipv4_only",
+                "address": "https://dns.google/dns-query",
+                "address_resolver": "dns_resolver",
+                "strategy": "ipv4_only",
+                "detour": "🚀 Proxy"
+            },
+            {
+                "tag": "dns_ipv6_only",
+                "address": "https://dns.google/dns-query",
+                "address_resolver": "dns_resolver",
+                "strategy": "ipv6_only",
+                "detour": "🚀 Proxy"
+            },
+            {
+                "tag": "local",
+                "address": "local"
+            }
+        ],
+        "rules": [
+            {
+                "clash_mode": "Direct",
+                "server": "dns_direct"
+            },
+            {
+                "clash_mode": "Global",
+                "server": "dns_remote"
+            },
+            {
+                "outbound": "any",
+                "server": "local"
+            },
+            {
+                "rule_set": [
+                    "geoip-cn",
+                    "geosite-geolocation-cn"
+                ],
+                "server": "dns_direct"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "rule_set": "geosite-geolocation-!cn",
+                        "invert": true
+                    },
+                    {
+                        "rule_set": [
+                            "geoip-cn"
+                        ]
+                    }
+                ],
+                "action": "route-options",
+                "server": "dns_remote",
+                "client_subnet": "114.114.114.114/24"
+            },
+            {
+                "inbound": [
+                    "mixed-in",
+                    "tun-in"
+                ],
+                "query_type": [
+                    "AAAA"
+                ],
+                "action": "route-options",
+                "server": "dns_ipv6_only",
+                "disable_cache": true,
+                "rewrite_ttl": 0
+            },
+            {
+                "inbound": [
+                    "mixed-in",
+                    "tun-in"
+                ],
+                "query_type": [
+                    "A"
+                ],
+                "action": "route-options",
+                "server": "dns_ipv4_only",
+                "disable_cache": true,
+                "rewrite_ttl": 0
+            }
+        ],
+        "final": "dns_remote",
+        "independent_cache": true
+    },
+    "route": {
         "rule_set": [
-          "geoip-cn",
-          "geosite-geolocation-cn"
+            {
+                "tag": "geosite-geolocation-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+                "download_detour": "🎯 Direct"
+            },
+            {
+                "tag": "geoip-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+                "download_detour": "🎯 Direct"
+            },
+            {
+                "tag": "geosite-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
+                "download_detour": "🎯 Direct"
+            },
+            {
+                "tag": "geosite-telegram",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
+                "download_detour": "🎯 Direct"
+            },
+            {
+                "tag": "geosite-geolocation-!cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
+                "download_detour": "🎯 Direct"
+            }
         ],
-        "server": "dns_direct"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
         "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": [
-              "geoip-cn"
-            ]
-          }
+            {
+                "inbound": [
+                    "mixed-in",
+                    "tun-in"
+                ],
+                "ip_version": 4,
+                "action": "resolve",
+                "strategy": "ipv4_only",
+                "server": "dns_ipv4_only"
+            },
+            {
+                "inbound": [
+                    "mixed-in",
+                    "tun-in"
+                ],
+                "ip_version": 6,
+                "action": "resolve",
+                "strategy": "ipv6_only",
+                "server": "dns_ipv6_only"
+            },
+            {
+                "action": "sniff"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "protocol": "dns"
+                    },
+                    {
+                        "port": 53
+                    }
+                ],
+                "action": "hijack-dns"
+            },
+            {
+                "clash_mode": "Direct",
+                "outbound": "🎯 Direct"
+            },
+            {
+                "clash_mode": "Global",
+                "outbound": "🚀 Proxy"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "🎯 Direct"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 853
+                    },
+                    {
+                        "network": "udp",
+                        "port": 443
+                    },
+                    {
+                        "protocol": "stun"
+                    }
+                ],
+                "action": "reject",
+                "method": "drop"
+            },
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "protocol": [
+                            "bittorrent",
+                            "ssh",
+                            "rdp"
+                        ]
+                    },
+                    {
+                        "rule_set": [
+                            "geoip-cn",
+                            "geosite-geolocation-cn"
+                        ]
+                    }
+                ],
+                "outbound": "🎯 Direct"
+            },
+            {
+                "rule_set": [
+                    "geosite-telegram",
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "🚀 Proxy"
+            }
         ],
-        "action": "route-options",
-        "server": "dns_remote",
-        "client_subnet": "114.114.114.114/24"
-      },
-      {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "query_type": [
-          "AAAA"
-        ],
-        "action": "route-options",
-        "server": "dns_ipv6_only",
-        "disable_cache": true,
-        "rewrite_ttl": 0
-      },
-      {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "query_type": [
-          "A"
-        ],
-        "action": "route-options",
-        "server": "dns_ipv4_only",
-        "disable_cache": true,
-        "rewrite_ttl": 0
-      }
+        "final": "🏁 Final",
+        "auto_detect_interface": true
+    },
+    "inbounds": [
+        {
+            "tag": "mixed-in",
+            "type": "mixed",
+            "listen": "127.0.0.1",
+            "listen_port": 2080,
+            "set_system_proxy": false
+        },
+        {
+            "tag": "tun-in",
+            "type": "tun",
+            "interface_name": "utun1",
+            "address": [
+                "172.19.0.1/30",
+                "fdfe:dcba:9876::1/126"
+            ],
+            "mtu": 9000,
+            "auto_route": true,
+            "strict_route": true,
+            "stack": "system",
+            "endpoint_independent_nat": false
+        }
     ],
-    "final": "dns_remote",
-    "independent_cache": true
-  },
-  "route": {
-    "rule_set": [
-      {
-        "tag": "geosite-geolocation-cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
-        "download_detour": "🎯 Direct"
-      },
-      {
-        "tag": "geoip-cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
-        "download_detour": "🎯 Direct"
-      },
-      {
-        "tag": "geosite-cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
-        "download_detour": "🎯 Direct"
-      },
-      {
-        "tag": "geosite-telegram",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
-        "download_detour": "🎯 Direct"
-      },
-      {
-        "tag": "geosite-geolocation-!cn",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://hub.gitmirror.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
-        "download_detour": "🎯 Direct"
-      }
-    ],
-    "rules": [
-      {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "ip_version": 4,
-        "action": "resolve",
-        "strategy": "ipv4_only",
-        "server": "dns_ipv4_only"
-      },
-      {
-        "inbound": [
-          "mixed-in",
-          "tun-in"
-        ],
-        "ip_version": 6,
-        "action": "resolve",
-        "strategy": "ipv6_only",
-        "server": "dns_ipv6_only"
-      },
-      {
-        "action": "sniff"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "action": "hijack-dns"
-      },
-      {
-        "clash_mode": "Direct",
-        "outbound": "🎯 Direct"
-      },
-      {
-        "clash_mode": "Global",
-        "outbound": "🚀 Proxy"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "🎯 Direct"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "action": "reject",
-        "method": "drop"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": [
-              "bittorrent",
-              "ssh",
-              "rdp"
+    "outbounds": [
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·1",
+            "server": "time.cloudflare.com",
+            "server_port": 8880,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
+            "server": "cdn-all.xn--b6gac.eu.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇰🇷 ·韩国·TG@kkouokk·3",
+            "server": "edgetunnel.anycast.eu.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·4",
+            "server": "edtunnel-dgp.pages.dev",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·5",
+            "server": "www.baipiao.eu.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇸🇬 ·新加坡·TG@kkouokk·6",
+            "server": "cdn-b100.xn--b6gac.eu.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·7",
+            "server": "xn--b6gac.eu.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇯🇵 ·日本·TG@kkouokk·8",
+            "server": "cdn.anycast.eu.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·9",
+            "server": "www.visa.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·10",
+            "server": "www.visa.com.sg",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·11",
+            "server": "www.udacity.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·12",
+            "server": "www.zsu.gov.ua",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇨🇦 ·加拿大·TG@kkouokk·13",
+            "server": "shopify.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·14",
+            "server": "www.visa.com.hk",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·15",
+            "server": "www.glassdoor.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·16",
+            "server": "www.visakorea.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·17",
+            "server": "www.okcupid.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·18",
+            "server": "www.digitalocean.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·19",
+            "server": "www.4chan.org",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·20",
+            "server": "www.visa.co.jp",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·21",
+            "server": "www.visa.com.tw",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·22",
+            "server": "www.udemy.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·23",
+            "server": "icook.hk",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
+            "server": "www.csgo.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·25",
+            "server": "www.boba88slot.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·26",
+            "server": "www.gov.se",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇸🇪 ·瑞典·TG@kkouokk·27",
+            "server": "www.shopify.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·28",
+            "server": "gur.gov.ua",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·29",
+            "server": "skk.moe",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·30",
+            "server": "www.whatismyip.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·31",
+            "server": "www.ipget.net",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·32",
+            "server": "log.bpminecraft.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·33",
+            "server": "www.iakeys.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·34",
+            "server": "alejandracaiccedo.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·35",
+            "server": "www.gov.ua",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇯🇵 ·日本·TG@kkouokk·36",
+            "server": "cdn-all.xijingping.link",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·37",
+            "server": "malaysia.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·38",
+            "server": "icook.tw",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·39",
+            "server": "russia.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·40",
+            "server": "japan.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·41",
+            "server": "www.hugedomains.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·42",
+            "server": "ip.sb",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·43",
+            "server": "www.whoer.net",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·44",
+            "server": "www.gco.gov.qa",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·45",
+            "server": "singapore.com",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vless",
+            "tag": "🇺🇸 ·美国·TG@kkouokk·46",
+            "server": "time.is",
+            "server_port": 80,
+            "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
+            "domain_strategy": "prefer_ipv4",
+            "transport": {
+                "path": "/?ed=2048",
+                "type": "ws",
+                "headers": {
+                    "Host": "kaka101.kkaa.workers.dev"
+                }
+            },
+            "network": "tcp"
+        },
+        {
+            "type": "vmess",
+            "tag": "🇨🇳_CN_中国->🏳️_unKnow_未知",
+            "server": "v8.heduian.link",
+            "server_port": 30808,
+            "uuid": "cbb3f877-d1fb-344c-87a9-d153bffd5484",
+            "alter_id": 2,
+            "security": "auto",
+            "transport": {
+                "type": "ws",
+                "path": "/oooo",
+                "headers": {
+                    "Host": "v8.heduian.link"
+                }
+            }
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "🇳🇱NL-51.15.23.63-5499",
+            "server": "51.15.23.63",
+            "server_port": 989,
+            "method": "aes-256-cfb",
+            "password": "f8f7aCzcPKbsF8p3"
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "🇺🇸 US_131",
+            "server": "38.54.57.90",
+            "server_port": 989,
+            "method": "aes-256-cfb",
+            "password": "f8f7aCzcPKbsF8p3"
+        },
+        {
+            "type": "vmess",
+            "tag": "🇨🇳CN-36.151.194.29-0782",
+            "server": "v29.heduian.link",
+            "server_port": 30829,
+            "uuid": "cbb3f877-d1fb-344c-87a9-d153bffd5484",
+            "alter_id": 2,
+            "security": "auto",
+            "transport": {
+                "type": "ws",
+                "path": "/oooo",
+                "headers": {
+                    "Host": "ocbc.com"
+                }
+            }
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "🇸🇮SI-91.132.94.200-5097",
+            "server": "91.132.94.200",
+            "server_port": 989,
+            "method": "aes-256-cfb",
+            "password": "f8f7aCzcPKbsF8p3"
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "⚡ b2n.ir/v2ray-configs | 514",
+            "server": "103.186.154.163",
+            "server_port": 38388,
+            "method": "aes-256-cfb",
+            "password": "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "_16",
+            "server": "37.235.49.152",
+            "server_port": 989,
+            "method": "aes-256-cfb",
+            "password": "f8f7aCzcPKbsF8p3"
+        },
+        {
+            "type": "vmess",
+            "tag": "🇩🇪 DE | 🔓 VMESS | @config_proxy [67]",
+            "server": "91.98.90.61",
+            "server_port": 8880,
+            "uuid": "9eaf5afd-fe08-4e07-9680-ed2ef6766b78",
+            "alter_id": 0,
+            "security": "auto",
+            "transport": {
+                "type": "ws",
+                "path": "",
+                "headers": {
+                    "Host": ""
+                }
+            }
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "🇬🇧 GB_56",
+            "server": "195.35.113.79",
+            "server_port": 443,
+            "method": "chacha20-ietf-poly1305",
+            "password": "1112935345BtgV5PDHVww"
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "🇮🇶 IQ_68",
+            "server": "91.132.94.200",
+            "server_port": 989,
+            "method": "aes-256-cfb",
+            "password": "f8f7aCzcPKbsF8p3"
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "🇺🇸_US_美国",
+            "server": "38.54.57.90",
+            "server_port": 989,
+            "method": "aes-256-cfb",
+            "password": "f8f7aCzcPKbsF8p3"
+        },
+        {
+            "type": "vmess",
+            "tag": "🇨🇳 江苏省 移动",
+            "server": "v8.heduian.link",
+            "server_port": 30808,
+            "uuid": "cbb3f877-d1fb-344c-87a9-d153bffd5484",
+            "alter_id": 2,
+            "security": "auto",
+            "transport": {
+                "type": "ws",
+                "path": "/oooo",
+                "headers": {
+                    "Host": "v8.heduian.link"
+                }
+            }
+        },
+        {
+            "tag": "♻️ 自动选择",
+            "type": "urltest",
+            "outbounds": [
+                "🇺🇸 ·美国·TG@kkouokk·4",
+                "🇺🇸 ·美国·TG@kkouokk·1",
+                "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
+                "🇰🇷 ·韩国·TG@kkouokk·3",
+                "🇺🇸 ·美国·TG@kkouokk·5",
+                "🇸🇬 ·新加坡·TG@kkouokk·6",
+                "🇺🇸 ·美国·TG@kkouokk·7",
+                "🇯🇵 ·日本·TG@kkouokk·8",
+                "🇺🇸 ·美国·TG@kkouokk·9",
+                "🇺🇸 ·美国·TG@kkouokk·10",
+                "🇺🇸 ·美国·TG@kkouokk·11",
+                "🇺🇸 ·美国·TG@kkouokk·12",
+                "🇨🇦 ·加拿大·TG@kkouokk·13",
+                "🇺🇸 ·美国·TG@kkouokk·14",
+                "🇺🇸 ·美国·TG@kkouokk·15",
+                "🇺🇸 ·美国·TG@kkouokk·16",
+                "🇺🇸 ·美国·TG@kkouokk·17",
+                "🇺🇸 ·美国·TG@kkouokk·18",
+                "🇺🇸 ·美国·TG@kkouokk·19",
+                "🇺🇸 ·美国·TG@kkouokk·20",
+                "🇺🇸 ·美国·TG@kkouokk·21",
+                "🇺🇸 ·美国·TG@kkouokk·22",
+                "🇺🇸 ·美国·TG@kkouokk·23",
+                "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
+                "🇺🇸 ·美国·TG@kkouokk·25",
+                "🇺🇸 ·美国·TG@kkouokk·26",
+                "🇸🇪 ·瑞典·TG@kkouokk·27",
+                "🇺🇸 ·美国·TG@kkouokk·28",
+                "🇺🇸 ·美国·TG@kkouokk·29",
+                "🇺🇸 ·美国·TG@kkouokk·30",
+                "🇺🇸 ·美国·TG@kkouokk·31",
+                "🇺🇸 ·美国·TG@kkouokk·32",
+                "🇺🇸 ·美国·TG@kkouokk·33",
+                "🇺🇸 ·美国·TG@kkouokk·34",
+                "🇺🇸 ·美国·TG@kkouokk·35",
+                "🇯🇵 ·日本·TG@kkouokk·36",
+                "🇺🇸 ·美国·TG@kkouokk·37",
+                "🇺🇸 ·美国·TG@kkouokk·38",
+                "🇺🇸 ·美国·TG@kkouokk·39",
+                "🇺🇸 ·美国·TG@kkouokk·40",
+                "🇺🇸 ·美国·TG@kkouokk·41",
+                "🇺🇸 ·美国·TG@kkouokk·42",
+                "🇺🇸 ·美国·TG@kkouokk·43",
+                "🇺🇸 ·美国·TG@kkouokk·44",
+                "🇺🇸 ·美国·TG@kkouokk·45",
+                "🇺🇸 ·美国·TG@kkouokk·46",
+                "🇨🇳_CN_中国->🏳️_unKnow_未知",
+                "🇳🇱NL-51.15.23.63-5499",
+                "🇺🇸 US_131",
+                "🇨🇳CN-36.151.194.29-0782",
+                "🇸🇮SI-91.132.94.200-5097",
+                "⚡ b2n.ir/v2ray-configs | 514",
+                "_16",
+                "🇩🇪 DE | 🔓 VMESS | @config_proxy [67]",
+                "🇬🇧 GB_56",
+                "🇮🇶 IQ_68",
+                "🇺🇸_US_美国",
+                "🇨🇳 江苏省 移动"
+            ],
+            "url": "http://cp.cloudflare.com/generate_204",
+            "interval": "5m",
+            "tolerance": 50
+        },
+        {
+            "tag": "🚀 Proxy",
+            "type": "selector",
+            "outbounds": [
+                "♻️ 自动选择",
+                "🇺🇸 ·美国·TG@kkouokk·4",
+                "🇺🇸 ·美国·TG@kkouokk·1",
+                "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
+                "🇰🇷 ·韩国·TG@kkouokk·3",
+                "🇺🇸 ·美国·TG@kkouokk·5",
+                "🇸🇬 ·新加坡·TG@kkouokk·6",
+                "🇺🇸 ·美国·TG@kkouokk·7",
+                "🇯🇵 ·日本·TG@kkouokk·8",
+                "🇺🇸 ·美国·TG@kkouokk·9",
+                "🇺🇸 ·美国·TG@kkouokk·10",
+                "🇺🇸 ·美国·TG@kkouokk·11",
+                "🇺🇸 ·美国·TG@kkouokk·12",
+                "🇨🇦 ·加拿大·TG@kkouokk·13",
+                "🇺🇸 ·美国·TG@kkouokk·14",
+                "🇺🇸 ·美国·TG@kkouokk·15",
+                "🇺🇸 ·美国·TG@kkouokk·16",
+                "🇺🇸 ·美国·TG@kkouokk·17",
+                "🇺🇸 ·美国·TG@kkouokk·18",
+                "🇺🇸 ·美国·TG@kkouokk·19",
+                "🇺🇸 ·美国·TG@kkouokk·20",
+                "🇺🇸 ·美国·TG@kkouokk·21",
+                "🇺🇸 ·美国·TG@kkouokk·22",
+                "🇺🇸 ·美国·TG@kkouokk·23",
+                "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
+                "🇺🇸 ·美国·TG@kkouokk·25",
+                "🇺🇸 ·美国·TG@kkouokk·26",
+                "🇸🇪 ·瑞典·TG@kkouokk·27",
+                "🇺🇸 ·美国·TG@kkouokk·28",
+                "🇺🇸 ·美国·TG@kkouokk·29",
+                "🇺🇸 ·美国·TG@kkouokk·30",
+                "🇺🇸 ·美国·TG@kkouokk·31",
+                "🇺🇸 ·美国·TG@kkouokk·32",
+                "🇺🇸 ·美国·TG@kkouokk·33",
+                "🇺🇸 ·美国·TG@kkouokk·34",
+                "🇺🇸 ·美国·TG@kkouokk·35",
+                "🇯🇵 ·日本·TG@kkouokk·36",
+                "🇺🇸 ·美国·TG@kkouokk·37",
+                "🇺🇸 ·美国·TG@kkouokk·38",
+                "🇺🇸 ·美国·TG@kkouokk·39",
+                "🇺🇸 ·美国·TG@kkouokk·40",
+                "🇺🇸 ·美国·TG@kkouokk·41",
+                "🇺🇸 ·美国·TG@kkouokk·42",
+                "🇺🇸 ·美国·TG@kkouokk·43",
+                "🇺🇸 ·美国·TG@kkouokk·44",
+                "🇺🇸 ·美国·TG@kkouokk·45",
+                "🇺🇸 ·美国·TG@kkouokk·46",
+                "🇨🇳_CN_中国->🏳️_unKnow_未知",
+                "🇳🇱NL-51.15.23.63-5499",
+                "🇺🇸 US_131",
+                "🇨🇳CN-36.151.194.29-0782",
+                "🇸🇮SI-91.132.94.200-5097",
+                "⚡ b2n.ir/v2ray-configs | 514",
+                "_16",
+                "🇩🇪 DE | 🔓 VMESS | @config_proxy [67]",
+                "🇬🇧 GB_56",
+                "🇮🇶 IQ_68",
+                "🇺🇸_US_美国",
+                "🇨🇳 江苏省 移动"
             ]
-          },
-          {
-            "rule_set": [
-              "geoip-cn",
-              "geosite-geolocation-cn"
+        },
+        {
+            "tag": "🏁 Final",
+            "type": "selector",
+            "outbounds": [
+                "🎯 Direct",
+                "🚀 Proxy"
             ]
-          }
-        ],
-        "outbound": "🎯 Direct"
-      },
-      {
-        "rule_set": [
-          "geosite-telegram",
-          "geosite-geolocation-!cn"
-        ],
-        "outbound": "🚀 Proxy"
-      }
+        },
+        {
+            "tag": "🎯 Direct",
+            "type": "direct"
+        }
     ],
-    "final": "🏁 Final",
-    "auto_detect_interface": true
-  },
-  "inbounds": [
-    {
-      "tag": "mixed-in",
-      "type": "mixed",
-      "listen": "127.0.0.1",
-      "listen_port": 2080,
-      "set_system_proxy": false
-    },
-    {
-      "tag": "tun-in",
-      "type": "tun",
-      "interface_name": "utun1",
-      "address": [
-        "172.19.0.1/30",
-        "fdfe:dcba:9876::1/126"
-      ],
-      "mtu": 9000,
-      "auto_route": true,
-      "strict_route": true,
-      "stack": "system",
-      "endpoint_independent_nat": false
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "path": "",
+            "store_rdrc": true
+        },
+        "clash_api": {
+            "external_controller": "127.0.0.1:9090",
+            "external_ui": "ui",
+            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
+            "external_ui_download_detour": "🚀 Proxy",
+            "default_mode": "Rule",
+            "access_control_allow_origin": [
+                "http://127.0.0.1"
+            ],
+            "access_control_allow_private_network": true
+        }
     }
-  ],
-  "outbounds": [
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·1",
-      "server": "time.cloudflare.com",
-      "server_port": 8880,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
-      "server": "cdn-all.xn--b6gac.eu.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇰🇷 ·韩国·TG@kkouokk·3",
-      "server": "edgetunnel.anycast.eu.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·4",
-      "server": "edtunnel-dgp.pages.dev",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·5",
-      "server": "www.baipiao.eu.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇸🇬 ·新加坡·TG@kkouokk·6",
-      "server": "cdn-b100.xn--b6gac.eu.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·7",
-      "server": "xn--b6gac.eu.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇯🇵 ·日本·TG@kkouokk·8",
-      "server": "cdn.anycast.eu.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·9",
-      "server": "www.visa.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·10",
-      "server": "www.visa.com.sg",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·11",
-      "server": "www.udacity.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·12",
-      "server": "www.zsu.gov.ua",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇨🇦 ·加拿大·TG@kkouokk·13",
-      "server": "shopify.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·14",
-      "server": "www.visa.com.hk",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·15",
-      "server": "www.glassdoor.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·16",
-      "server": "www.visakorea.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·17",
-      "server": "www.okcupid.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·18",
-      "server": "www.digitalocean.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·19",
-      "server": "www.4chan.org",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·20",
-      "server": "www.visa.co.jp",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·21",
-      "server": "www.visa.com.tw",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·22",
-      "server": "www.udemy.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·23",
-      "server": "icook.hk",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
-      "server": "www.csgo.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·25",
-      "server": "www.boba88slot.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·26",
-      "server": "www.gov.se",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇸🇪 ·瑞典·TG@kkouokk·27",
-      "server": "www.shopify.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·28",
-      "server": "gur.gov.ua",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·29",
-      "server": "skk.moe",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·30",
-      "server": "www.whatismyip.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·31",
-      "server": "www.ipget.net",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·32",
-      "server": "log.bpminecraft.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·33",
-      "server": "www.iakeys.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·34",
-      "server": "alejandracaiccedo.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·35",
-      "server": "www.gov.ua",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇯🇵 ·日本·TG@kkouokk·36",
-      "server": "cdn-all.xijingping.link",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·37",
-      "server": "malaysia.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·38",
-      "server": "icook.tw",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·39",
-      "server": "russia.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·40",
-      "server": "japan.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·41",
-      "server": "www.hugedomains.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·42",
-      "server": "ip.sb",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·43",
-      "server": "www.whoer.net",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·44",
-      "server": "www.gco.gov.qa",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·45",
-      "server": "singapore.com",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "type": "vless",
-      "tag": "🇺🇸 ·美国·TG@kkouokk·46",
-      "server": "time.is",
-      "server_port": 80,
-      "uuid": "7b0668fc-6e0c-4362-b2b0-64d5f7f4a1f8",
-      "domain_strategy": "prefer_ipv4",
-      "transport": {
-        "path": "/?ed=2048",
-        "type": "ws",
-        "headers": {
-          "Host": "kaka101.kkaa.workers.dev"
-        }
-      },
-      "network": "tcp"
-    },
-    {
-      "tag": "♻️ 自动选择",
-      "type": "urltest",
-      "outbounds": [
-        "🇺🇸 ·美国·TG@kkouokk·4",
-        "🇺🇸 ·美国·TG@kkouokk·1",
-        "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
-        "🇰🇷 ·韩国·TG@kkouokk·3",
-        "🇺🇸 ·美国·TG@kkouokk·5",
-        "🇸🇬 ·新加坡·TG@kkouokk·6",
-        "🇺🇸 ·美国·TG@kkouokk·7",
-        "🇯🇵 ·日本·TG@kkouokk·8",
-        "🇺🇸 ·美国·TG@kkouokk·9",
-        "🇺🇸 ·美国·TG@kkouokk·10",
-        "🇺🇸 ·美国·TG@kkouokk·11",
-        "🇺🇸 ·美国·TG@kkouokk·12",
-        "🇨🇦 ·加拿大·TG@kkouokk·13",
-        "🇺🇸 ·美国·TG@kkouokk·14",
-        "🇺🇸 ·美国·TG@kkouokk·15",
-        "🇺🇸 ·美国·TG@kkouokk·16",
-        "🇺🇸 ·美国·TG@kkouokk·17",
-        "🇺🇸 ·美国·TG@kkouokk·18",
-        "🇺🇸 ·美国·TG@kkouokk·19",
-        "🇺🇸 ·美国·TG@kkouokk·20",
-        "🇺🇸 ·美国·TG@kkouokk·21",
-        "🇺🇸 ·美国·TG@kkouokk·22",
-        "🇺🇸 ·美国·TG@kkouokk·23",
-        "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
-        "🇺🇸 ·美国·TG@kkouokk·25",
-        "🇺🇸 ·美国·TG@kkouokk·26",
-        "🇸🇪 ·瑞典·TG@kkouokk·27",
-        "🇺🇸 ·美国·TG@kkouokk·28",
-        "🇺🇸 ·美国·TG@kkouokk·29",
-        "🇺🇸 ·美国·TG@kkouokk·30",
-        "🇺🇸 ·美国·TG@kkouokk·31",
-        "🇺🇸 ·美国·TG@kkouokk·32",
-        "🇺🇸 ·美国·TG@kkouokk·33",
-        "🇺🇸 ·美国·TG@kkouokk·34",
-        "🇺🇸 ·美国·TG@kkouokk·35",
-        "🇯🇵 ·日本·TG@kkouokk·36",
-        "🇺🇸 ·美国·TG@kkouokk·37",
-        "🇺🇸 ·美国·TG@kkouokk·38",
-        "🇺🇸 ·美国·TG@kkouokk·39",
-        "🇺🇸 ·美国·TG@kkouokk·40",
-        "🇺🇸 ·美国·TG@kkouokk·41",
-        "🇺🇸 ·美国·TG@kkouokk·42",
-        "🇺🇸 ·美国·TG@kkouokk·43",
-        "🇺🇸 ·美国·TG@kkouokk·44",
-        "🇺🇸 ·美国·TG@kkouokk·45",
-        "🇺🇸 ·美国·TG@kkouokk·46"
-      ],
-      "url": "http://cp.cloudflare.com/generate_204",
-      "interval": "5m",
-      "tolerance": 50
-    },
-    {
-      "tag": "🚀 Proxy",
-      "type": "selector",
-      "outbounds": [
-        "♻️ 自动选择",
-        "🇺🇸 ·美国·TG@kkouokk·4",
-        "🇺🇸 ·美国·TG@kkouokk·1",
-        "🇷🇴 ·罗马尼亚·TG@kkouokk·2",
-        "🇰🇷 ·韩国·TG@kkouokk·3",
-        "🇺🇸 ·美国·TG@kkouokk·5",
-        "🇸🇬 ·新加坡·TG@kkouokk·6",
-        "🇺🇸 ·美国·TG@kkouokk·7",
-        "🇯🇵 ·日本·TG@kkouokk·8",
-        "🇺🇸 ·美国·TG@kkouokk·9",
-        "🇺🇸 ·美国·TG@kkouokk·10",
-        "🇺🇸 ·美国·TG@kkouokk·11",
-        "🇺🇸 ·美国·TG@kkouokk·12",
-        "🇨🇦 ·加拿大·TG@kkouokk·13",
-        "🇺🇸 ·美国·TG@kkouokk·14",
-        "🇺🇸 ·美国·TG@kkouokk·15",
-        "🇺🇸 ·美国·TG@kkouokk·16",
-        "🇺🇸 ·美国·TG@kkouokk·17",
-        "🇺🇸 ·美国·TG@kkouokk·18",
-        "🇺🇸 ·美国·TG@kkouokk·19",
-        "🇺🇸 ·美国·TG@kkouokk·20",
-        "🇺🇸 ·美国·TG@kkouokk·21",
-        "🇺🇸 ·美国·TG@kkouokk·22",
-        "🇺🇸 ·美国·TG@kkouokk·23",
-        "🇨🇾 ·塞浦路斯·TG@kkouokk·24",
-        "🇺🇸 ·美国·TG@kkouokk·25",
-        "🇺🇸 ·美国·TG@kkouokk·26",
-        "🇸🇪 ·瑞典·TG@kkouokk·27",
-        "🇺🇸 ·美国·TG@kkouokk·28",
-        "🇺🇸 ·美国·TG@kkouokk·29",
-        "🇺🇸 ·美国·TG@kkouokk·30",
-        "🇺🇸 ·美国·TG@kkouokk·31",
-        "🇺🇸 ·美国·TG@kkouokk·32",
-        "🇺🇸 ·美国·TG@kkouokk·33",
-        "🇺🇸 ·美国·TG@kkouokk·34",
-        "🇺🇸 ·美国·TG@kkouokk·35",
-        "🇯🇵 ·日本·TG@kkouokk·36",
-        "🇺🇸 ·美国·TG@kkouokk·37",
-        "🇺🇸 ·美国·TG@kkouokk·38",
-        "🇺🇸 ·美国·TG@kkouokk·39",
-        "🇺🇸 ·美国·TG@kkouokk·40",
-        "🇺🇸 ·美国·TG@kkouokk·41",
-        "🇺🇸 ·美国·TG@kkouokk·42",
-        "🇺🇸 ·美国·TG@kkouokk·43",
-        "🇺🇸 ·美国·TG@kkouokk·44",
-        "🇺🇸 ·美国·TG@kkouokk·45",
-        "🇺🇸 ·美国·TG@kkouokk·46"
-      ]
-    },
-    {
-      "tag": "🏁 Final",
-      "type": "selector",
-      "outbounds": [
-        "🎯 Direct",
-        "🚀 Proxy"
-      ]
-    },
-    {
-      "tag": "🎯 Direct",
-      "type": "direct"
-    }
-  ],
-  "experimental": {
-    "cache_file": {
-      "enabled": true,
-      "path": "",
-      "store_rdrc": true
-    },
-    "clash_api": {
-      "external_controller": "127.0.0.1:9090",
-      "external_ui": "ui",
-      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
-      "external_ui_download_detour": "🚀 Proxy",
-      "default_mode": "Rule",
-      "access_control_allow_origin": [
-        "http://127.0.0.1"
-      ],
-      "access_control_allow_private_network": true
-    }
-  }
 }

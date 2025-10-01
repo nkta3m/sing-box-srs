@@ -37,7 +37,7 @@ def parse_vless(link, version="1.11"):
     # 获取常见字段（兼容 packetEncoding 与 packet_encoding）
     path = query.get("path", [""])[0]
     host = query.get("host", [""])[0]
-    flow = query.get("flow", [""])[0]
+    # flow = query.get("flow", [""])[0]
     transport_type = query.get("type", ["tcp"])[0]
     # packetEncoding param in links like ...&packetEncoding=xudp
     packet_encoding = query.get("packetEncoding", query.get("packet_encoding", [""]))[
@@ -53,14 +53,15 @@ def parse_vless(link, version="1.11"):
             "type": "vless",
             "tag": tag,
             "server": server,
-            "port": port,
+            "server_port": port,
             "uuid": uuid,
-            "flow": flow,
+            # "flow": flow,
             "transport": {
                 "type": transport_type,
                 "path": path,
                 "headers": {"Host": host},
             },
+            "network": "tcp",
             # 按你要求：不输出 tls、skip-cert-verify、tcp_fast_open
         }
         if packet_encoding:

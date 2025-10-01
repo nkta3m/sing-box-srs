@@ -31,8 +31,8 @@
             },
             {
                 "tag": "dns_ipv4_only",
-                "type": "udp",
-                "server": "8.8.8.8",
+                "type": "https",
+                "server": "dns.google",
                 "domain_resolver": {
                     "server": "dns_resolver",
                     "strategy": "ipv4_only"
@@ -41,8 +41,8 @@
             },
             {
                 "tag": "dns_ipv6_only",
-                "type": "udp",
-                "server": "[2001:4860:4860::8888]",
+                "type": "https",
+                "server": "dns.google",
                 "domain_resolver": {
                     "server": "dns_resolver",
                     "strategy": "ipv6_only"
