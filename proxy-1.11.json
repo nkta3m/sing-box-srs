@@ -59,6 +59,7 @@
                 "debian.club",
                 "nodeseek.com",
                 "nirsoft.net",
+                "pkgbuild.com",
                 "yas8p.com"
             ],
             "domain_suffix": [
@@ -158,6 +159,7 @@
                 ".debian.club",
                 ".nodeseek.com",
                 ".nirsoft.net",
+                ".pkgbuild.com",
                 ".yas8p.com"
             ]
         }
