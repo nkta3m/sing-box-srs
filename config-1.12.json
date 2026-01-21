@@ -129,35 +129,35 @@
                 "tag": "geosite-geolocation-cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://githubfast.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+                "url": "https://moeyy.cn/gh-proxy/raw/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
                 "download_detour": "🎯 Direct"
             },
             {
                 "tag": "geoip-cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://githubfast.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+                "url": "https://moeyy.cn/gh-proxy/raw/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
                 "download_detour": "🎯 Direct"
             },
             {
                 "tag": "geosite-cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://githubfast.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
+                "url": "https://moeyy.cn/gh-proxy/raw/SagerNet/sing-geosite/rule-set/geosite-cn.srs",
                 "download_detour": "🎯 Direct"
             },
             {
                 "tag": "geosite-telegram",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://githubfast.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
+                "url": "https://moeyy.cn/gh-proxy/raw/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
                 "download_detour": "🎯 Direct"
             },
             {
                 "tag": "geosite-geolocation-!cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://githubfast.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
+                "url": "https://moeyy.cn/gh-proxy/raw/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
                 "download_detour": "🎯 Direct"
             }
         ],
